@@ -1,0 +1,8 @@
+#header-main {
+  background-color: blueviolet;
+  color: black; }
+  #header-main ul {
+    display: flex;
+    justify-content: space-around; }
+    #header-main ul li {
+      align-items: center; }
