@@ -1,0 +1,40 @@
+<link href="<%= asset_path('css/users.css') %>" rel="stylesheet"/>
+<link href="<%= asset_path('css/chatbox.css') %>" rel="stylesheet"/>
+
+  <%if(locals.user){%>
+  <section class="secction">
+    <form action="/users/postcreate" id="new-post" method="POST" >
+      <textarea name="content" cols="30" rows="10" required></textarea>
+      <input type="submit" value="Post" />
+    </form>
+  </section>
+  <%}%>
+  <section id="post-container">
+    <% for(post of posts){ %> 
+        
+      <%- include('posts') -%>
+        
+    <%}%>
+  </section>
+  <section>
+    <% for(user of user_all){ %> 
+      <div><a href="/users/profile/<%= user.id %>"><%= user.name %></a>
+        </div>
+        
+      
+        
+    <%}%>
+    
+  </section>
+  <%- include('chatbox') -%>
+
+  <script src="<%= asset_path('js/post_comments.js') %>"></script>
+  <script src="<%= asset_path('js/home_post.js') %>"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"></script>
+  <script src="<%= asset_path('js/chat_engine.js') %>"></script>
+  <% if (locals.user){ %>
+    <script>
+        new ChatEngine('user-chat-box', '<%= locals.user.email %>')
+    </script>
+    <% } %>

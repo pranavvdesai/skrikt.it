@@ -1,0 +1,7 @@
+<div class="comment-box" id="comment-<%= comment.id %>">
+    <div><%= comment.content%></div>
+    <small><%=comment.user.name%></small>
+    <%if(locals.user && locals.user.id == comment.user.id || locals.user && locals.user.id == post.user.id){%>
+      <small><a class="delete-comment-button" href="/users/deletecomment/<%=comment._id %>">Delete comment</a></small>
+    <%}%>
+    </div>

@@ -1,0 +1,27 @@
+<header id="header-main">
+    <ul>
+        <h1>Page Header</h1>
+        <% if (locals.user){ %>
+            <li>
+                <a href="">
+                    <%= user.name %>
+                </a>
+            </li>
+            <li>
+                <a href="/logout">Sign Out</a>
+            </li>
+        <% }else{ %>
+
+            <li>
+                <a href="/login">Sign In</a>
+            </li>
+
+            <li>
+                <a href="/register">Sign Up</a>
+            </li>
+
+
+        <% } %>
+    </ul>
+
+</header>
