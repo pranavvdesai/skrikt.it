@@ -1,5 +1,5 @@
-var Post = require("../models/post");
-const Comment = require("../models/comments");
+var Post = require('../models/post');
+const Comment = require('../models/comments');
 
 module.exports.createPost = async (req, res) => {
   try {
@@ -7,7 +7,6 @@ module.exports.createPost = async (req, res) => {
       content: req.body.content,
       user: req.user._id,
     });
-    
 
     if (req.xhr) {
       post = await post.populate('user', 'name').execPopulate();
@@ -15,14 +14,14 @@ module.exports.createPost = async (req, res) => {
         data: {
           post: post,
         },
-        message: "Post Created",
+        message: 'Post Created',
       });
     }
 
-    req.flash("success", "Post Created");
-    return res.redirect("back");
+    req.flash('success', 'Post Created');
+    return res.redirect('back');
   } catch (err) {
-    req.flash("error", err);
+    req.flash('error', err);
     return;
   }
 };
@@ -39,18 +38,18 @@ module.exports.destroy = async (req, res) => {
           data: {
             post_id: req.params.id,
           },
-          message: "Post Deleted",
+          message: 'Post Deleted',
         });
       }
 
-      req.flash("success", "Post Removed");
-      return res.redirect("back");
+      req.flash('success', 'Post Removed');
+      return res.redirect('back');
     } else {
-      req.flash("error", "You can't delete this post");
-      return res.redirect("back");
+      req.flash('error', "You can't delete this post");
+      return res.redirect('back');
     }
   } catch (err) {
-    req.flash("error", err);
+    req.flash('error', err);
     return;
   }
 };
