@@ -6,9 +6,9 @@ passport.use(
   new LocalStrategy(
     {
       usernameField: 'email',
-      passReqToCallback: true
+      passReqToCallback: true,
     },
-    function (req,email, password, done) {
+    function (req, email, password, done) {
       User.findOne({ email: email }, (err, user) => {
         if (err) {
           req.flash('error', err);

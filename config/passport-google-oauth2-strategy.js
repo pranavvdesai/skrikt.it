@@ -1,9 +1,9 @@
-const passport = require("passport");
+const passport = require('passport');
 
-const googleStrategy = require("passport-google-oauth").OAuth2Strategy;
-const crypto = require("crypto");
-const User = require("../models/user");
-const env = require("./environment");
+const googleStrategy = require('passport-google-oauth').OAuth2Strategy;
+const crypto = require('crypto');
+const User = require('../models/user');
+const env = require('./environment');
 
 passport.use(
   new googleStrategy(
@@ -15,7 +15,7 @@ passport.use(
     (accessToken, refreshToken, profile, done) => {
       User.findOne({ email: profile.emails[0].value }).exec((err, user) => {
         if (err) {
-          console.log("err in google strategy", err);
+          console.log('err in google strategy', err);
           return;
         }
         console.log(profile);
@@ -26,11 +26,11 @@ passport.use(
             {
               email: profile.emails[0].value,
               name: profile.displayName,
-              password: crypto.randomBytes(20).toString("hex"),
+              password: crypto.randomBytes(20).toString('hex'),
             },
             (err, user) => {
               if (err) {
-                console.log("err in google strategy", err);
+                console.log('err in google strategy', err);
                 return;
               }
               return done(null, user);
