@@ -1,45 +1,44 @@
-require("dotenv").config({
+require('dotenv').config({
   path: `${__dirname}/.env.${process.env.NODE_ENV}`,
 });
-console.log(process.env);
-const express = require("express");
-const env = require("./config/environment");
-const logger = require("morgan");
+const express = require('express');
+const env = require('./config/environment');
+const logger = require('morgan');
 const app = express();
 
-require("./config/view-helpers")(app);
+require('./config/view-helpers')(app);
 
 const port = 8000;
-const cookieParser = require("cookie-parser");
-const db = require("./config/mongoose");
-const User = require("./models/user");
+const cookieParser = require('cookie-parser');
+const db = require('./config/mongoose');
+const User = require('./models/user');
 
-const session = require("express-session");
-const passport = require("passport");
-const passportLocal = require("./config/passport-local-strategy");
-const passportJWT = require("./config/passport-jwt-strategy");
-const passportGoogle = require("./config/passport-google-oauth2-strategy");
+const session = require('express-session');
+const passport = require('passport');
+const passportLocal = require('./config/passport-local-strategy');
+const passportJWT = require('./config/passport-jwt-strategy');
+const passportGoogle = require('./config/passport-google-oauth2-strategy');
 
-const MongoStore = require("connect-mongo");
-const sassMiddleware = require("node-sass-middleware");
-const flash = require("connect-flash");
-const customMiddleware = require("./config/middleware");
-var expressLayouts = require("express-ejs-layouts");
+const MongoStore = require('connect-mongo');
+const sassMiddleware = require('node-sass-middleware');
+const flash = require('connect-flash');
+const customMiddleware = require('./config/middleware');
+var expressLayouts = require('express-ejs-layouts');
 
-const chatServer = require("http").Server(app);
-const chatSockets = require("./config/chat_sockets").chatSockets(chatServer);
+const chatServer = require('http').Server(app);
+const chatSockets = require('./config/chat_sockets').chatSockets(chatServer);
 chatServer.listen(5000);
-console.log("Chat server listening on port 5000");
-const path = require("path");
+console.log('Chat server listening on port 5000');
+const path = require('path');
 
-if (process.env.NODE_ENV === "development") {
+if (process.env.NODE_ENV === 'development') {
   app.use(
     sassMiddleware({
-      src: path.join(__dirname, process.env.ASSET_PATH, "scss"),
-      dest: path.join(__dirname, process.env.ASSET_PATH, "css"),
+      src: path.join(__dirname, process.env.ASSET_PATH, 'scss'),
+      dest: path.join(__dirname, process.env.ASSET_PATH, 'css'),
       debug: true,
-      outputStyle: "extended",
-      prefix: "/css",
+      outputStyle: 'extended',
+      prefix: '/css',
     })
   );
 }
@@ -50,21 +49,21 @@ app.use(cookieParser());
 
 app.use(express.static(process.env.ASSET_PATH));
 
-app.use("/uploads", express.static("uploads"));
+app.use('/uploads', express.static('uploads'));
 
 app.use(logger(env.morgan.mode, env.morgan.options));
 
 app.use(expressLayouts);
 
-app.set("layout extractStyles", true);
-app.set("layout extractScripts", true);
+app.set('layout extractStyles', true);
+app.set('layout extractScripts', true);
 
-app.set("view engine", "ejs");
-app.set("views", "./views");
+app.set('view engine', 'ejs');
+app.set('views', './views');
 
 app.use(
   session({
-    name: "pranav",
+    name: 'pranav',
     secret: process.env.SESSION_COOKIE_KEY,
     saveUninitialized: false,
     resave: false,
@@ -74,10 +73,10 @@ app.use(
     store: MongoStore.create(
       {
         mongoUrl: `mongodb://localhost/${process.env.APP_DB}`,
-        autoRemove: "disabled",
+        autoRemove: 'disabled',
       },
       (err) => {
-        console.log(err || "connect-mongodb setup ok");
+        console.log(err || 'connect-mongodb setup ok');
       }
     ),
   })
@@ -91,7 +90,7 @@ app.use(passport.setAuthenticatedUser);
 app.use(flash());
 app.use(customMiddleware.setFlash);
 
-app.use("/", require("./routes/index"));
+app.use('/', require('./routes/index'));
 
 app.listen(port, (err) => {
   if (err) {
