@@ -3,7 +3,7 @@ class ChatEngine {
     this.chatBox = $(`#${chatBoxId}`);
     this.userEmail = userEmail;
 
-    this.socket = io.connect("http://localhost:5000");
+    this.socket = io.connect('http://localhost:5000');
 
     if (this.userEmail) {
       this.connectionHandler();
@@ -13,50 +13,50 @@ class ChatEngine {
   connectionHandler() {
     self = this;
     console.log(self.userEmail);
-    this.socket.on("connect", function () {
-      console.log("connection established using sockets...!");
+    this.socket.on('connect', function () {
+      console.log('connection established using sockets...!');
 
-      self.socket.emit("join_room", {
+      self.socket.emit('join_room', {
         user_email: self.userEmail,
-        chatroom: "some room",
+        chatroom: 'some room',
       });
 
-      self.socket.on("user_joined", function (data) {
-        console.log("a user joined: ", data);
+      self.socket.on('user_joined', function (data) {
+        console.log('a user joined: ', data);
       });
 
-      $("#send-message").on("click", function () {
-        let msg = $("#chat-message-input").val();
-        if (msg != "") {
-          self.socket.emit("send_message", {
+      $('#send-message').on('click', function () {
+        let msg = $('#chat-message-input').val();
+        if (msg != '') {
+          self.socket.emit('send_message', {
             user_email: self.userEmail,
             message: msg,
-            chatroom: "some room",
+            chatroom: 'some room',
           });
         }
       });
     });
 
-    self.socket.on("receive_message", function (data) {
-      console.log("received message: ", data.message);
+    self.socket.on('receive_message', function (data) {
+      console.log('received message: ', data.message);
 
-      let newMesaage = $("<li>");
-      let messageType = "other-message";
+      let newMesaage = $('<li>');
+      let messageType = 'other-message';
       if (data.user_email == self.userEmail) {
-        messageType = "self-message";
+        messageType = 'self-message';
       }
       newMesaage.append(
-        $("<span>", {
+        $('<span>', {
           html: data.message,
         })
       );
       newMesaage.append(
-        $("<sub>", {
+        $('<sub>', {
           html: data.user_email,
         })
       );
       newMesaage.addClass(messageType);
-      $("#chat-messages-list").append(newMesaage);
+      $('#chat-messages-list').append(newMesaage);
     });
   }
 }

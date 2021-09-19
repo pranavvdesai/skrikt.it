@@ -1,20 +1,20 @@
 {
   let createpost = () => {
-    let newPostform = $("#new-post");
+    let newPostform = $('#new-post');
 
     newPostform.submit(function (e) {
       e.preventDefault();
 
       $.ajax({
-        type: "POST",
-        url: "/users/postcreate",
+        type: 'POST',
+        url: '/users/postcreate',
         data: newPostform.serialize(),
         success: function (data) {
           console.log(data);
           let newpost = createpostdom(data.data.post);
 
-          $("#post-container").prepend(newpost);
-          let postshow = $(" .delete-post", newpost);
+          $('#post-container').prepend(newpost);
+          let postshow = $(' .delete-post', newpost);
 
           deletePost(postshow);
 
@@ -56,9 +56,9 @@
     $(deletelink).click(function (e) {
       e.preventDefault();
       $.ajax({
-        type: "GET",
+        type: 'GET',
 
-        url: $(deletelink).prop("href"),
+        url: $(deletelink).prop('href'),
         success: function (data) {
           $(`#post-${data.data.post_id}`).remove();
           console.log(data);
@@ -71,16 +71,16 @@
   };
 
   let convertPostsToAjax = () => {
-    $("#post-container")
+    $('#post-container')
       .children()
       .children()
-      .children("a.delete-post")
+      .children('a.delete-post')
       .each(function () {
         let self = $(this);
-        let deletebutton = (" .delete-post", self);
+        let deletebutton = (' .delete-post', self);
         deletePost(deletebutton);
 
-        let postId = self.prop("id").split("-")[1];
+        let postId = self.prop('id').split('-')[1];
         new PostComments(postId);
       });
   };

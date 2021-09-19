@@ -8,7 +8,7 @@ class PostComments {
 
     let self = this;
 
-    $(" .delete-comment-button", this.postContainer).each(function () {
+    $(' .delete-comment-button', this.postContainer).each(function () {
       self.deleteComment($(this));
     });
   }
@@ -20,19 +20,19 @@ class PostComments {
       let self = this;
 
       $.ajax({
-        type: "post",
-        url: "/users/commentcreate",
+        type: 'post',
+        url: '/users/commentcreate',
         data: $(self).serialize(),
         success: function (data) {
           let newComment = pSelf.newCommentDom(data.data.comment);
           $(`#post-comments-${postId}`).prepend(newComment);
-          pSelf.deleteComment($(" .delete-comment-button", newComment));
+          pSelf.deleteComment($(' .delete-comment-button', newComment));
 
           new Noty({
-            theme: "relax",
-            text: "Comment published!",
-            type: "success",
-            layout: "topRight",
+            theme: 'relax',
+            text: 'Comment published!',
+            type: 'success',
+            layout: 'topRight',
             timeout: 1500,
           }).show();
         },
@@ -57,16 +57,16 @@ class PostComments {
       e.preventDefault();
 
       $.ajax({
-        type: "get",
-        url: $(deleteLink).prop("href"),
+        type: 'get',
+        url: $(deleteLink).prop('href'),
         success: function (data) {
           $(`#comment-${data.data.comment_id}`).remove();
 
           new Noty({
-            theme: "relax",
-            text: "Comment Deleted",
-            type: "success",
-            layout: "topRight",
+            theme: 'relax',
+            text: 'Comment Deleted',
+            type: 'success',
+            layout: 'topRight',
             timeout: 1500,
           }).show();
         },
