@@ -11,6 +11,7 @@ router.post('/create', homeController.create);
 router.get('/login', homeController.login);
 router.get('/', postscontroller.showPost);
 
+// passport as a middleware to authenticate
 router.post(
   '/create-session',
   passport.authenticate('local', { failureRedirect: '/' }),
@@ -23,6 +24,7 @@ router.use('/api', require('./api'));
 
 router.use('/logout', homeController.logout);
 
+// OAuth authentication routes.
 router.get(
   '/auth/google',
   passport.authenticate('google', { scope: ['profile', 'email'] })

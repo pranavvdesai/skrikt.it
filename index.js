@@ -13,6 +13,7 @@ const cookieParser = require('cookie-parser');
 const db = require('./config/mongoose');
 const User = require('./models/user');
 
+// used for session cookie
 const session = require('express-session');
 const passport = require('passport');
 const passportLocal = require('./config/passport-local-strategy');
@@ -25,6 +26,7 @@ const flash = require('connect-flash');
 const customMiddleware = require('./config/middleware');
 var expressLayouts = require('express-ejs-layouts');
 
+// chat server to be used with socket.io
 const chatServer = require('http').Server(app);
 const chatSockets = require('./config/chat_sockets').chatSockets(chatServer);
 chatServer.listen(5000);
@@ -49,18 +51,22 @@ app.use(cookieParser());
 
 app.use(express.static(process.env.ASSET_PATH));
 
+// making the uploads path available to the browser
 app.use('/uploads', express.static('uploads'));
 
 app.use(logger(env.morgan.mode, env.morgan.options));
 
 app.use(expressLayouts);
 
+// extracting style and scripts from sub pages into the layout
 app.set('layout extractStyles', true);
 app.set('layout extractScripts', true);
 
+// setting up the view engine
 app.set('view engine', 'ejs');
 app.set('views', './views');
 
+// Storing the session in mongodb
 app.use(
   session({
     name: 'pranav',
@@ -90,6 +96,7 @@ app.use(passport.setAuthenticatedUser);
 app.use(flash());
 app.use(customMiddleware.setFlash);
 
+// express router
 app.use('/', require('./routes/index'));
 
 app.listen(port, (err) => {

@@ -1,4 +1,5 @@
 {
+  // method to submit the form data for new post using AJAX
   let createpost = () => {
     let newPostform = $('#new-post');
 
@@ -52,6 +53,7 @@
          `);
   };
 
+  // method to delete the post using AJAX
   let deletePost = (deletelink) => {
     $(deletelink).click(function (e) {
       e.preventDefault();
@@ -70,6 +72,7 @@
     });
   };
 
+  // method to delete the comment using AJAX
   let convertPostsToAjax = () => {
     $('#post-container')
       .children()

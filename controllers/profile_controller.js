@@ -22,7 +22,7 @@ module.exports.update = async (req, res) => {
         }
         user.name = req.body.profile_name;
         user.email = req.body.profile_email;
-        console.log(req.file);
+        /// stores the path of the uploaded file in the avatar field of the user object
         if (req.file) {
           if (
             user.avatar &&

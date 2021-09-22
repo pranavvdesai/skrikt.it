@@ -5,6 +5,7 @@ const crypto = require('crypto');
 const User = require('../models/user');
 const env = require('./environment');
 
+// passport strategy for google login
 passport.use(
   new googleStrategy(
     {

@@ -1,3 +1,4 @@
+// A chat application using sockets
 class ChatEngine {
   constructor(chatBoxId, userEmail) {
     this.chatBox = $(`#${chatBoxId}`);

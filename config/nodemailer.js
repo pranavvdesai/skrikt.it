@@ -14,6 +14,7 @@ let transporter = nodemailer.createTransport({
   },
 });
 
+// Send mail with a custom template
 let renderTemplate = (data, relativePath) => {
   let mailHTML;
   ejs.renderFile(

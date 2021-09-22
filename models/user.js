@@ -21,29 +21,25 @@ const userSchema = new mongoose.Schema(
     },
     avatar: {
       type: String,
-
-
-    }
+    },
   },
   { timestamps: true }
 );
 
+// multer to store avatars
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, path.join(__dirname, '..',AVATAR_PATH));
+    cb(null, path.join(__dirname, '..', AVATAR_PATH));
   },
   filename: function (req, file, cb) {
-    cb(null, file.fieldname + '-' + Date.now())
-  }
-})
+    cb(null, file.fieldname + '-' + Date.now());
+  },
+});
 
-userSchema.statics.uploadedAvatar = multer({ storage: storage }).single('avatar');
+userSchema.statics.uploadedAvatar = multer({ storage: storage }).single(
+  'avatar'
+);
 userSchema.statics.avatarpath = AVATAR_PATH;
-
-
-
-
-
 
 const User = mongoose.model('User', userSchema);
 

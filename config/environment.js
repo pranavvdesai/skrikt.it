@@ -4,6 +4,7 @@ const rfs = require('rotating-file-stream');
 const logDirectory = path.join(__dirname, '../production_logs');
 fs.existsSync(logDirectory) || fs.mkdirSync(logDirectory);
 
+// create a rfs for prod and dev envs
 const accessLogStream = rfs.createStream('access.log', {
   interval: '1d',
   path: logDirectory,

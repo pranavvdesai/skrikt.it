@@ -20,7 +20,7 @@ module.exports.create = (req, res) => {
   if (req.body.password != req.body.confirmpassword) {
     return res.redirect('back');
   }
-
+  // find the user, if not present create a new user
   User.findOne({ email: req.body.email }, (err, user) => {
     if (err) {
       console.log('error in finding user');

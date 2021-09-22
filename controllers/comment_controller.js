@@ -13,7 +13,7 @@ module.exports.createComment = async (req, res) => {
         user: req.user._id,
         post: req.body.post,
       });
-
+      // adding the comment to the post comments array
       post.comments.push(comment);
       post.save();
       comment = await comment.populate('user', 'name email').execPopulate();
@@ -55,6 +55,8 @@ module.exports.deletecomment = async (req, res) => {
       await Post.findByIdAndUpdate(postId, {
         $pull: { comments: req.params.id },
       });
+      
+      // sending the comment id which was deleted back to the views
       if (req.xhr) {
         res.status(200).json({
           data: {
